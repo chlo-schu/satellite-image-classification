@@ -1,5 +1,5 @@
 # satellite-image-classification
-This is the thesis project of Chloe Schueller
+This is the independent project of Chloe Schueller. Last updated on May 5th, 2025.
 
 # Water Classification System
 This Python script provides a complete workflow for classifying water bodies (lakes and rivers) from satellite imagery using machine learning.
