@@ -158,3 +158,70 @@ Examine the vector boundaries to ensure they match actual water features
 If there are issues, look at the probability maps to see where the model is uncertain
 
 The model is designed to distinguish between lakes, rivers, and land, focusing solely on the spectral signatures from the base bands (Blue, Green, Red, NIR) rather than using derived indices.
+
+## Interpreting Files in the Generated folder
+### Classification Files
+
+{image_name}_classification.tif
+
+The main classification result as a GeoTIFF raster
+Each pixel has a value: 0 (land), 1 (lake), or 2 (river)
+Used for further analysis and as input to other generated files
+
+{image_name}_lake_prob.tif and {image_name}_river_prob.tif
+
+Probability maps showing the likelihood (0.0-1.0) that each pixel belongs to lake or river class
+Higher values indicate greater confidence in the classification
+Useful for identifying areas of uncertainty
+
+{image_name}_viz.png
+
+Enhanced visualization with RGB satellite imagery as background
+Classified water features overlaid as transparent blue (lakes) and dark blue (rivers)
+Includes a legend for visual interpretation
+Best file for quick visual assessment of results
+
+### Vector Files
+
+{image_name}_lake_boundaries.shp and {image_name}_river_boundaries.shp
+
+Shapefile containing vector polygons representing the boundaries of lakes and rivers
+Each shapefile includes several component files:
+
+.shp - The geometry data
+.shx - Spatial index
+.dbf - Attribute data
+.prj - Projection information
+
+Can be opened in GIS software for further analysis or map creation
+
+### Model Files
+
+water_classification_models.joblib
+
+Serialized trained machine learning model(s)
+Can be loaded to classify new images without retraining
+Contains both the model and any preprocessing components (like feature selectors)
+
+feature_importance.csv
+
+Table showing the importance of each spectral band for classification
+Helps understand which bands contribute most to the model's decisions
+Ordered from most to least important
+
+### Log File
+
+processing.log
+
+Text file with detailed logs of the entire processing workflow
+Records steps taken, warnings, errors, and timing information
+Useful for troubleshooting and understanding the processing sequence
+
+### Naming Conventions
+In the filenames:
+
+{image_name} is derived from the input image, typically from the blue band filename
+For example, if the blue band is named T05VNJ_20230724T214539_B02_10m.tif, the image name might be T05VNJ
+The date component (e.g., 20230724T214539) represents the image acquisition date and time in format YYYYMMDD and HHMMSS
+For classification results, suffixes like _classification, _prob, _viz indicate the file type
+For vector results, suffixes like _lake_boundaries and _river_boundaries indicate the water feature type
